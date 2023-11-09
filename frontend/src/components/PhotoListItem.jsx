@@ -1,35 +1,37 @@
 import React from "react";
 
 import "../styles/PhotoListItem.scss";
+import PhotoFavButton from "./PhotoFavButton";
 
+const photos = new Array(3)
 
-const sampleDataForPhotoListItem = {
-  id: "1",
-  location: {
-    city: "Montreal",
-    country: "Canada",
-  },
-  imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-  username: "Joe Example",
-  profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-};
+const PhotoListItem = (props) => {
+  
+  const {
+    location: { city, country },
+    imageSource,
+    username,
+    profile,
+  } = props.sampleDataForPhotoListItem;
 
-const PhotoListItem = () => {
   return (
-    <article className='photo-list'>
-      <img src={sampleDataForPhotoListItem.imageSource}></img>
-      <img src = {sampleDataForPhotoListItem.profile}></img>
-      <div>
-        <span>{sampleDataForPhotoListItem.username}</span>
-        <br />
-        <span>
-          {sampleDataForPhotoListItem.location.city}
-          {" "}
-          {sampleDataForPhotoListItem.location.country}
-        </span>
-      </div>
+    <article className="photo-list__item">
+      <PhotoFavButton />
+      <img src={imageSource} className="photo-list__image" />
+      <footer className="photo-list__user-details">
+        <img src={profile} className="photo-list__user-profile" />
+        <div className="photo-list__user-info">
+          <span>{username}</span>
+          <br />
+          <span className="photo-list__user-location">
+            {" "}
+            {`${city}, ${country}`}
+          </span>
+        </div>
+      </footer>
     </article>
   );
 };
+
 
 export default PhotoListItem;
