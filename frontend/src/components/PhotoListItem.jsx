@@ -3,25 +3,21 @@ import React from "react";
 import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
-const photos = new Array(3)
-
 const PhotoListItem = (props) => {
-  
   const {
     location: { city, country },
-    imageSource,
-    username,
-    profile,
-  } = props.sampleDataForPhotoListItem;
+    user: { name, profile },
+    urls: { regular },
+  } = props;
 
   return (
     <article className="photo-list__item">
       <PhotoFavButton />
-      <img src={imageSource} className="photo-list__image" />
+      <img src={regular} className="photo-list__image" />
       <footer className="photo-list__user-details">
         <img src={profile} className="photo-list__user-profile" />
         <div className="photo-list__user-info">
-          <span>{username}</span>
+          <span>{name}</span>
           <br />
           <span className="photo-list__user-location">
             {" "}
@@ -32,6 +28,5 @@ const PhotoListItem = (props) => {
     </article>
   );
 };
-
 
 export default PhotoListItem;
