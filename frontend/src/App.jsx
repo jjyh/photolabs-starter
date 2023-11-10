@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 
 //import PhotoListItem from './components/PhotoListItem';
 import './App.scss';
@@ -6,6 +7,7 @@ import PhotoList from './components/PhotoList';
 import TopicList from "components/TopicList";
 import TopNavigationBar from "components/TopNavigationBar";
 import HomeRoute from "routes/HomeRoute";
+import PhotoDetailsModal from "routes/PhotoDetailsModal";
 
 // const sampleDataForPhotoListItem = {
 //   id: "1",
@@ -38,10 +40,14 @@ const App = () => {
 
 // <PhotoList />
 //<TopicList />
-<TopNavigationBar />
+//<TopNavigationBar />
+  const [modal, setModal] = useState({ isOpen: false });
   return(
     <div className="App">
-      <HomeRoute />  
+      <HomeRoute setModal={setModal} />
+      {modal.isOpen && (
+        <PhotoDetailsModal photo={modal.photo} setModal={setModal} />
+      )}
     </div>
   );
 };

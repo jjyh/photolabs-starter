@@ -12,7 +12,8 @@ const PhotoListItem = (props) => {
       user: { name, profile },
     },
     addFavPhoto,
-    delFavPhoto
+    delFavPhoto,
+    setModal
   } = props;
 
   const handleFavButtonClick = (photoObj) => {
@@ -27,7 +28,7 @@ const PhotoListItem = (props) => {
     <article className="photo-list__item">
       <PhotoFavButton handleFavButtonClick={() => handleFavButtonClick(props.photo)}
         selected={selected}/>
-      <img src={regular} className="photo-list__image" />
+      <img src={regular} className="photo-list__image" onClick={() => setModal({ isOpen: true, photo: props.photo })}/>
       <footer className="photo-list__user-details">
         <img src={profile} className="photo-list__user-profile" />
         <div className="photo-list__user-info">

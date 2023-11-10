@@ -5,7 +5,7 @@ import TopNavigationBar from "../components/TopNavigationBar";
 
 import '../styles/HomeRoute.scss';
 
-const HomeRoute = () => {
+const HomeRoute = ({setModal}) => {
   const [favPhotos, setFavPhotos] = useState({});
   // show if fav:
   const addFavPhoto = (photo) => {
@@ -22,7 +22,7 @@ const HomeRoute = () => {
   return (
     <div className="home-route">
       <TopNavigationBar isFavPhotoExist={Object.keys(favPhotos).length > 0} />
-      <PhotoList addFavPhoto={addFavPhoto} delFavPhoto={delFavPhoto}/>
+      <PhotoList addFavPhoto={addFavPhoto} delFavPhoto={delFavPhoto} setModal = {setModal}/>
     </div>
   );
 };
