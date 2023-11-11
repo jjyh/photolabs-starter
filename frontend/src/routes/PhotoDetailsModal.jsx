@@ -5,15 +5,21 @@ import closeSymbol from '../assets/closeSymbol.svg';
 import PhotoFavButton from "components/PhotoFavButton";
 import PhotoList from "components/PhotoList";
 
-const PhotoDetailsModal = ({ photo, setModal }) => {
+const PhotoDetailsModal = (props) => {
   //console.log(photo);
+  const {photo, favPhotos, addFavPhoto, delFavPhoto, setModal } = props;
   const {
+    id,
     location: { city, country },
     urls: { full },
     user: { name, profile },
     similar_photos
   } = photo;
 
+  const handleFavButtonClick = (photoObj) => {
+    // copy add/del from photolist
+    favPhotos[id] ? delFavPhoto(photoObj) : addFavPhoto(photoObj);
+  };
   return (
     <div className="photo-details-modal">
       <button className="photo-details-modal__close-button"
@@ -24,7 +30,9 @@ const PhotoDetailsModal = ({ photo, setModal }) => {
 
 {/*zoom in photo*/}
       <section className="photo-details-modal__images">
-        <PhotoFavButton />
+        <PhotoFavButton handleFavButtonClick={() => handleFavButtonClick(photo)}
+          selected={!!favPhotos[id]}
+        />
         <img src={full} className="photo-details-modal__image" />
 
         <footer className="photo-details-modal__photographer-details">
@@ -47,7 +55,12 @@ const PhotoDetailsModal = ({ photo, setModal }) => {
       {/* Section of similar photos */}
       <section className="photo-details-modal__images">
         <h2 className="photo-details-modal__header">Similar Photo</h2>
-        <PhotoList photos={Object.values(similar_photos)} />
+        <PhotoList 
+          photos={Object.values(similar_photos)}
+          favPhotos={favPhotos}
+          addFavPhoto={addFavPhoto}
+          delFavPhoto={delFavPhoto}
+        />
       </section>
 
     </div>

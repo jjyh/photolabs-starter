@@ -42,11 +42,33 @@ const App = () => {
 //<TopicList />
 //<TopNavigationBar />
   const [modal, setModal] = useState({ isOpen: false });
+  const [favPhotos, setFavPhotos] = useState({});
+  // show if fav:
+  const addFavPhoto = (photo) => {
+    setFavPhotos((prev) => ({ ...prev, [photo.id]: { photo } }));
+  };
+  //don't if not
+  const delFavPhoto = (photo) => {
+    setFavPhotos((prev) => {
+      const { [photo.id]: removed, ...remain } = prev;
+      return remain;
+    });
+  };
+
   return(
     <div className="App">
-      <HomeRoute setModal={setModal} />
+      <HomeRoute 
+        setModal={setModal}
+        favPhotos={favPhotos}
+        addFavPhoto={addFavPhoto}
+        removeFavPhoto={delFavPhoto} />
       {modal.isOpen && (
-        <PhotoDetailsModal photo={modal.photo} setModal={setModal} />
+        <PhotoDetailsModal 
+        photo={modal.photo} 
+        setModal={setModal}
+        favPhotos={favPhotos}
+        addFavPhoto={addFavPhoto}
+        removeFavPhoto={delFavPhoto} />
       )}
     </div>
   );
