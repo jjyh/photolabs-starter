@@ -7,7 +7,7 @@ import PhotoList from "components/PhotoList";
 
 const PhotoDetailsModal = (props) => {
   //console.log(photo);
-  const {photo, favPhotos, handleFavButtonClick, setModal } = props;
+  const {photo, favPhotos, handleFavButtonClick, onClosePhotoDetailsModal } = props;
   const {
     id,
     location: { city, country },
@@ -19,7 +19,7 @@ const PhotoDetailsModal = (props) => {
   return (
     <div className="photo-details-modal">
       <button className="photo-details-modal__close-button"
-        onClick={() => setModal(null)}
+        onClick={onClosePhotoDetailsModal}
       >
       <img src={closeSymbol} alt="close symbol" />
       </button>

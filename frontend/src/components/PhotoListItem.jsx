@@ -5,7 +5,7 @@ import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
   //const [selected, setSelected] = useState(false);
-  const { photo, isFav, setModal, handleFavButtonClick } = props;
+  const { photo, isFav, setModalPhoto, handleFavButtonClick } = props;
   const { 
     id,
     location: { city, country },
@@ -18,7 +18,7 @@ const PhotoListItem = (props) => {
       <PhotoFavButton handleFavButtonClick={handleFavButtonClick}
         selected={isFav}
       />
-      <img src={regular} className="photo-list__image" onClick={() => setModal(photo)}/>
+      <img src={regular} className="photo-list__image" onClick={() => setModalPhoto(photo)}/>
       <footer className="photo-list__user-details">
         <img src={profile} className="photo-list__user-profile" />
         <div className="photo-list__user-info">
