@@ -41,34 +41,45 @@ const App = () => {
 // <PhotoList />
 //<TopicList />
 //<TopNavigationBar />
-  const [modal, setModal] = useState({ isOpen: false });
-  const [favPhotos, setFavPhotos] = useState({});
+  const [modalPhoto, setModalPhoto] = useState(null); // modal w/ photo key shows photo
+  const [favPhotos, setFavPhotos] = useState([]);
   // show if fav:
-  const addFavPhoto = (photo) => {
-    setFavPhotos((prev) => ({ ...prev, [photo.id]: { photo } }));
+  const addFavPhoto = (photoID) => {
+    setFavPhotos((prev) => {
+      if (!prev.includes(photoID)) {
+        return [...prev, photoID];
+      }
+    });
   };
   //don't if not
-  const delFavPhoto = (photo) => {
+  const delFavPhoto = (photoID) => {
     setFavPhotos((prev) => {
-      const { [photo.id]: removed, ...remain } = prev;
-      return remain;
+      const index = prev.indexOf(photoID);
+      return index >= 0 ? prev.splice(index, 1) : prev;
     });
+  };
+
+  const handleFavButtonClick = (photoID) => {
+    // addFavPhoto (current photo) when clicked but not yet in favPhoto
+    // if not, delete current photo from favorited
+    favPhotos.includes(photoID)
+      ? delFavPhoto(photoID)
+      : addFavPhoto(photoID);
   };
 
   return(
     <div className="App">
       <HomeRoute 
-        setModal={setModal}
+        setModal={setModalPhoto}
         favPhotos={favPhotos}
-        addFavPhoto={addFavPhoto}
-        removeFavPhoto={delFavPhoto} />
-      {modal.isOpen && (
+        handleFavButtonClick={handleFavButtonClick}
+      />
+      {modalPhoto && (
         <PhotoDetailsModal 
-        photo={modal.photo} 
-        setModal={setModal}
+        photo={modalPhoto} 
+        setModal={setModalPhoto}
         favPhotos={favPhotos}
-        addFavPhoto={addFavPhoto}
-        removeFavPhoto={delFavPhoto} />
+        handleFavButtonClick={handleFavButtonClick} />
       )}
     </div>
   );

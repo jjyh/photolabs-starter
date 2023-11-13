@@ -7,7 +7,7 @@ import PhotoList from "components/PhotoList";
 
 const PhotoDetailsModal = (props) => {
   //console.log(photo);
-  const {photo, favPhotos, addFavPhoto, delFavPhoto, setModal } = props;
+  const {photo, favPhotos, handleFavButtonClick, setModal } = props;
   const {
     id,
     location: { city, country },
@@ -16,22 +16,19 @@ const PhotoDetailsModal = (props) => {
     similar_photos
   } = photo;
 
-  const handleFavButtonClick = (photoObj) => {
-    // copy add/del from photolist
-    favPhotos[id] ? delFavPhoto(photoObj) : addFavPhoto(photoObj);
-  };
   return (
     <div className="photo-details-modal">
       <button className="photo-details-modal__close-button"
-        onClick={() => setModal({ isOpen: false })}
+        onClick={() => setModal(null)}
       >
       <img src={closeSymbol} alt="close symbol" />
       </button>
 
 {/*zoom in photo*/}
       <section className="photo-details-modal__images">
-        <PhotoFavButton handleFavButtonClick={() => handleFavButtonClick(photo)}
-          selected={!!favPhotos[id]}
+        <PhotoFavButton 
+          handleFavButtonClick={() => handleFavButtonClick(id)}
+          selected={!!favPhotos.includes(id)}
         />
         <img src={full} className="photo-details-modal__image" />
 
@@ -58,8 +55,7 @@ const PhotoDetailsModal = (props) => {
         <PhotoList 
           photos={Object.values(similar_photos)}
           favPhotos={favPhotos}
-          addFavPhoto={addFavPhoto}
-          delFavPhoto={delFavPhoto}
+          handleFavButtonClick={handleFavButtonClick}
         />
       </section>
 

@@ -6,9 +6,14 @@ import "../styles/PhotoList.scss";
 
 
 const PhotoList = (props) => {
-  const photos = props.photos || photoData;
+  const { photos, handleFavButtonClick, favPhotos, ...otherProps } = props;
   const photosElem = photos.map((photo) => (
-    <PhotoListItem key={photo.id} photo={photo} {...props} />
+    <PhotoListItem 
+    key={photo.id} 
+    photo={photo}
+    handleFavButtonClick={() => handleFavButtonClick(photo.id)}
+    isFav={!!favPhotos.includes(photo.id)}
+    {...otherProps} />
   ));
   return (
     <ul className="photo-list">{photosElem}</ul>
