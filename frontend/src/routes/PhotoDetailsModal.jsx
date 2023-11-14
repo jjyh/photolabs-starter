@@ -7,7 +7,7 @@ import PhotoList from "components/PhotoList";
 
 const PhotoDetailsModal = (props) => {
   //console.log(photo);
-  const {photo, favPhotos, handleFavButtonClick, onClosePhotoDetailsModal } = props;
+  const {photo, favPhotos, addFavPhoto, delFavPhoto, onClosePhotoDetailsModal } = props;
   const {
     id,
     location: { city, country },
@@ -15,6 +15,12 @@ const PhotoDetailsModal = (props) => {
     user: { name, profile },
     similar_photos
   } = photo;
+
+  const handleFavButtonClick = (photoId) => {
+    return favPhotos.includes(photoId)
+      ? delFavPhoto(photoId)
+      : addFavPhoto(photoId);
+  };
 
   return (
     <div className="photo-details-modal">
@@ -55,7 +61,8 @@ const PhotoDetailsModal = (props) => {
         <PhotoList 
           photos={Object.values(similar_photos)}
           favPhotos={favPhotos}
-          handleFavButtonClick={handleFavButtonClick}
+          addFavPhoto={addFavPhoto}
+          delFavPhoto={delFavPhoto}
         />
       </section>
 

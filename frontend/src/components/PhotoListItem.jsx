@@ -1,11 +1,9 @@
 import React from "react";
-import { useState } from "react";
 import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
-  //const [selected, setSelected] = useState(false);
-  const { photo, isFav, setModalPhoto, handleFavButtonClick } = props;
+  const { photo, isFav, setModalPhoto, addFavPhoto, delFavPhoto } = props;
   const { 
     id,
     location: { city, country },
@@ -15,7 +13,10 @@ const PhotoListItem = (props) => {
 
   return (
     <article className="photo-list__item">
-      <PhotoFavButton handleFavButtonClick={handleFavButtonClick}
+      <PhotoFavButton
+        handleFavButtonClick={() =>
+          isFav ? delFavPhoto(id) : addFavPhoto(id)
+        }
         selected={isFav}
       />
       <img src={regular} className="photo-list__image" onClick={() => setModalPhoto(photo)}/>

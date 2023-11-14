@@ -5,7 +5,6 @@ import topics from "../mocks/topics";
 
 import "../styles/TopicList.scss";
 
-
 const TopicList = () => {
   const topicsElem = topics.map((topic) => (
     <TopicListItem key={topic.id} {...topic} />

@@ -1,48 +1,44 @@
 import React from 'react';
-import { useState } from 'react';
 
-//import PhotoListItem from './components/PhotoListItem';
 import './App.scss';
-import PhotoList from './components/PhotoList';
-import TopicList from "components/TopicList";
-import TopNavigationBar from "components/TopNavigationBar";
 import HomeRoute from "routes/HomeRoute";
 import PhotoDetailsModal from "routes/PhotoDetailsModal";
 import useApplicationData from './hooks/useApplicationData';
+import photos from "./mocks/photos";
 
-// const sampleDataForPhotoListItem = {
-//   id: "1",
-//   location: {
-//     city: "Montreal",
-//     country: "Canada",
-//   },
-//   imageSource: `${process.env.PUBLIC_URL}/Image-1-Regular.jpeg`,
-//   username: "Joe Example",
-//   profile: `${process.env.PUBLIC_URL}/profile-1.jpg`,
-// };
-
-// Note: Rendering a single component to build components in isolation
 const App = () => {
   const {
     state: { favPhotos, modalPhoto },
-    setModalPhoto,
-    onClosePhotoDetailsModal,
-    handleFavButtonClick,
+    dispatch
   } = useApplicationData();
 
   return(
     <div className="App">
       <HomeRoute 
-        setModalPhoto={setModalPhoto}
+        photos={photos}
+        setModalPhoto={(photo) =>
+          dispatch({ type: "SELECT_PHOTO", payload: photo })
+        }
         favPhotos={favPhotos}
-        handleFavButtonClick={handleFavButtonClick}
+        addFavPhoto={(photoID) =>
+          dispatch({ type: "FAV_PHOTO_ADDED", payload: photoID })
+        }
+        delFavPhoto={(photoID) =>
+          dispatch({ type: "FAV_PHOTO_REMOVED", payload: photoID })
+        }
       />
       {modalPhoto && (
         <PhotoDetailsModal 
         photo={modalPhoto} 
-        onClosePhotoDetailsModal={onClosePhotoDetailsModal}
+        onClosePhotoDetailsModal={() => dispatch({ type: "SELECT_PHOTO" })}
         favPhotos={favPhotos}
-        handleFavButtonClick={handleFavButtonClick} />
+        addFavPhoto={(photoID) =>
+          dispatch({ type: "FAV_PHOTO_ADDED", payload: photoID })
+        }
+        delFavPhoto={(photoID) =>
+          dispatch({ type: "FAV_PHOTO_REMOVED", payload: photoID })
+        }
+         />
       )}
     </div>
   );

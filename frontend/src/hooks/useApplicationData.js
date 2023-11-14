@@ -1,41 +1,51 @@
-import { useState } from "react";
-const useApplicationData = () => {
+import { useReducer  } from "react";
 
-  const [modalPhoto, setModalPhoto] = useState(null); // modal w/ photo key shows photo
-  const [favPhotos, setFavPhotos] = useState([]);
-  // show if fav:
-  const addFavPhoto = (photoID) => {
-    setFavPhotos((prev) => {
-      if (!prev.includes(photoID)) {
-        return [...prev, photoID];
+function reducer(state, action) {
+  switch (action.type) {
+    // if photo is not in favPhoto, include
+    case "FAV_PHOTO_ADDED":
+    if (!state.favPhotos.includes(action.payload)) {
+      return { ...state, favPhotos: [...state.favPhotos, action.payload] };
+    }
+    return state;
+
+    case "FAV_PHOTO_REMOVED":
+      const index = state.favPhotos.indexOf(action.payload);
+      if (index >= 0) {
+        return { ...state, favPhotos: state.favPhotos.splice(index, 1) };
       }
-    });
-  };
-  //don't if not
-  const delFavPhoto = (photoID) => {
-    setFavPhotos((prev) => {
-      const index = prev.indexOf(photoID);
-      return index >= 0 ? prev.splice(index, 1) : prev;
-    });
-  };
+   return state;
 
-  const handleFavButtonClick = (photoID) => {
-    // addFavPhoto (current photo) when clicked but not yet in favPhoto
-    // if not, delete current photo from favorited
-    favPhotos.includes(photoID)
-      ? delFavPhoto(photoID)
-      : addFavPhoto(photoID);
-  };
+  case "SET_PHOTO_DATA":
+    return { ...state, photoData: action.payload };
 
-  const onClosePhotoDetailsModal = () => {
-    setModalPhoto(null);
-  };
+  case "SET_TOPIC_DATA":
+    return { ...state, topicData: action.payload };
+  
+  case "SELECT_PHOTO":
+    if (action.payload) {
+      return { ...state, modalPhoto: action.payload };
+    }
+      return { ...state, modalPhoto: null };
+
+  default:
+    throw new Error(
+      `Tried to reduce with unsupported action type: ${action.type}`
+    );
+  }
+};
+
+const useApplicationData = () => {
+  const [state, dispatch] = useReducer(reducer, {
+    favPhotos: [],
+    modalPhoto: null,
+    photoData: null,
+    topicData: null,
+  });
 
   return {
-    state: { modalPhoto, favPhotos },
-    setModalPhoto,
-    handleFavButtonClick,
-    onClosePhotoDetailsModal
+    state,
+    dispatch
   };
 };
 
