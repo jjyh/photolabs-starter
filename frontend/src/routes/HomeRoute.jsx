@@ -5,12 +5,15 @@ import TopNavigationBar from "../components/TopNavigationBar";
 import '../styles/HomeRoute.scss';
 
 const HomeRoute = (props) => {
-//  const { favPhotos, addFavPhoto, delFavPhoto, setModal } = props;  
+  const { topics, fetchPhotosByTopic,...otherProps } = props;
 
   return (
     <div className="home-route">
-      <TopNavigationBar isFavPhotoExist={props.favPhotos.length > 0} />
-      <PhotoList {...props}/>
+      <TopNavigationBar 
+        topics={topics} 
+        isFavPhotoExist={props.favPhotos.length > 0}
+        fetchPhotosByTopic={fetchPhotosByTopic}/>
+      <PhotoList {...otherProps}/>
     </div>
   );
 };

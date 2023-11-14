@@ -1,6 +1,17 @@
-import { useReducer  } from "react";
+import { useReducer, useEffect } from "react";
+import photos from "../mocks/photos";
+import topics from "../mocks/topics";
 
-function reducer(state, action) {
+export const ACTIONS = {
+  FAV_PHOTO_ADDED: "FAV_PHOTO_ADDED",
+  FAV_PHOTO_REMOVED: "FAV_PHOTO_REMOVED",
+  SET_PHOTO_DATA: "SET_PHOTO_DATA",
+  SET_TOPIC_DATA: "SET_TOPIC_DATA",
+  SELECT_PHOTO: "SELECT_PHOTO",
+  GET_PHOTOS_BY_TOPICS:"GET_PHOTOS_BY_TOPICS"
+};
+
+const reducer = (state, action) => {
   switch (action.type) {
     // if photo is not in favPhoto, include
     case "FAV_PHOTO_ADDED":
@@ -39,13 +50,37 @@ const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, {
     favPhotos: [],
     modalPhoto: null,
-    photoData: null,
-    topicData: null,
+    photoData: [],
+    topicData: topics
   });
+
+  useEffect(() => {
+    // fetch("http://localhost:8001/api/photos").then((res)=>{console.log(res);})
+    fetch("http://localhost:8001/api/photos")
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data })
+      );
+  // //   fetch("/api/topics")
+  //     .then((res) => res.json())
+  //     .then((data) =>
+  //       dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data })
+  //     );
+    }, 
+  []);
+
+  // const fetchPhotosByTopic = (topicID) => {
+  //   fetch(`api/topics/photos/${topicID}`)
+  //     .then((res) => res.json())
+  //     .then((photos) =>
+  //       dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: photos })
+  //     );
+  // };
 
   return {
     state,
-    dispatch
+    dispatch,
+    // fetchPhotosByTopic
   };
 };
 

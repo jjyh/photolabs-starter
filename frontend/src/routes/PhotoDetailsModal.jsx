@@ -1,4 +1,4 @@
-import React,  { useState } from 'react';
+import React from 'react';
 
 import '../styles/PhotoDetailsModal.scss'
 import closeSymbol from '../assets/closeSymbol.svg';
@@ -6,7 +6,6 @@ import PhotoFavButton from "components/PhotoFavButton";
 import PhotoList from "components/PhotoList";
 
 const PhotoDetailsModal = (props) => {
-  //console.log(photo);
   const {photo, favPhotos, addFavPhoto, delFavPhoto, onClosePhotoDetailsModal } = props;
   const {
     id,
@@ -16,10 +15,10 @@ const PhotoDetailsModal = (props) => {
     similar_photos
   } = photo;
 
-  const handleFavButtonClick = (photoId) => {
-    return favPhotos.includes(photoId)
-      ? delFavPhoto(photoId)
-      : addFavPhoto(photoId);
+  const handleFavButtonClick = (photoID) => {
+    return favPhotos.includes(photoID)
+      ? delFavPhoto(photoID)
+      : addFavPhoto(photoID);
   };
 
   return (
