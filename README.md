@@ -1,7 +1,12 @@
-# react-photolabs
-The PhotoLabs project for the Web Development React course programming.
+# React-Photolabs
+The PhotoLabs project applying React to build a single-page application which presents photos to users.  Photos may be seen by category and selected as favourates.  Data is retrieved/fetched from the API backend server to set the photos. 
 
-# Photolabs
+## Screenshots
+### Main Layout
+!["main view"](https://github.com/jjyh/photolabs-starter/blob/main/docs/main.png?raw=true])
+
+### Functional features - topic category selection, modal view and favourite selection
+!["modal view and selecting favourite within nature category"](https://github.com/jjyh/photolabs-starter/blob/main/docs/category.gif?raw=true)
 
 ## Setup
 
