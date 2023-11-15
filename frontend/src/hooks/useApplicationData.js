@@ -27,8 +27,10 @@ const reducer = (state, action) => {
       }
    return state;
 
+  // both set fetched photos as photoData
   case "SET_PHOTO_DATA":
-    return { ...state, photoData: action.payload };
+    case "GET_PHOTOS_BY_TOPICS":
+      return { ...state, photoData: action.payload };
 
   case "SET_TOPIC_DATA":
     return { ...state, topicData: action.payload };
@@ -55,32 +57,33 @@ const useApplicationData = () => {
   });
 
   useEffect(() => {
-    // fetch("http://localhost:8001/api/photos").then((res)=>{console.log(res);})
+    // fetch("/api/photos").then((res)=>{console.log(res);})
+    //above results in local host 3000
     fetch("http://localhost:8001/api/photos")
       .then((res) => res.json())
       .then((data) =>
         dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data })
       );
-  // //   fetch("/api/topics")
-  //     .then((res) => res.json())
-  //     .then((data) =>
-  //       dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data })
-  //     );
+    fetch("/api/topics")
+      .then((res) => res.json())
+      .then((data) =>
+        dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data })
+      );
     }, 
   []);
 
-  // const fetchPhotosByTopic = (topicID) => {
-  //   fetch(`api/topics/photos/${topicID}`)
-  //     .then((res) => res.json())
-  //     .then((photos) =>
-  //       dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: photos })
-  //     );
-  // };
+  const fetchPhotosByTopic = (topicID) => {
+    fetch(`api/topics/photos/${topicID}`)
+      .then((res) => res.json())
+      .then((photos) =>
+        dispatch({ type: ACTIONS.GET_PHOTOS_BY_TOPICS, payload: photos })
+      );
+  };
 
   return {
     state,
     dispatch,
-    // fetchPhotosByTopic
+    fetchPhotosByTopic
   };
 };
 
