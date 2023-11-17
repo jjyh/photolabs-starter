@@ -1,6 +1,4 @@
 import { useReducer, useEffect } from "react";
-import photos from "../mocks/photos";
-import topics from "../mocks/topics";
 
 export const ACTIONS = {
   FAV_PHOTO_ADDED: "FAV_PHOTO_ADDED",
@@ -53,12 +51,11 @@ const useApplicationData = () => {
     favPhotos: [],
     modalPhoto: null,
     photoData: [],
-    topicData: topics
+    topicData: []
   });
 
   useEffect(() => {
-    // fetch("/api/photos").then((res)=>{console.log(res);})
-    //above results in local host 3000
+    // /api/photos results in local host 3000
     fetch("http://localhost:8001/api/photos")
       .then((res) => res.json())
       .then((data) =>

@@ -20,7 +20,7 @@ const PhotoListItem = (props) => {
         }
         selected={isFav}
       />
-      <img src={regular} className="photo-list__image" onClick={() => setModalPhoto(photo)}/>
+      <img src={regular} className="photo-list__image" onClick={() => !!setModalPhoto && setModalPhoto(photo)}/>
       <footer className="photo-list__user-details">
         <img src={profile} className="photo-list__user-profile" />
         <div className="photo-list__user-info">
